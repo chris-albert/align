@@ -23,21 +23,21 @@ describe('align', function () {
         ]);
         expect(Aligner.align(['='], input)).to.equal(input);
       });
-      it('if split char is split by line with no split char', function () {
-        const input  = arrToMultiline([
-          'foo = bar',
-          'somthing',
-          'foofoo = barbar',
-          'hey man, what\'s up'
-        ]);
-        const output = arrToMultiline([
-          'foo = bar',
-          'somthing',
-          'foofoo = barbar',
-          'hey man, what\'s up'
-        ]);
-        expect(Aligner.align(['='], input)).to.equal(output);
-      });
+      // it('if split char is split by line with no split char', function () {
+      //   const input  = arrToMultiline([
+      //     'foo = bar',
+      //     'somthing',
+      //     'foofoo = barbar',
+      //     'hey man, what\'s up'
+      //   ]);
+      //   const output = arrToMultiline([
+      //     'foo = bar',
+      //     'somthing',
+      //     'foofoo = barbar',
+      //     'hey man, what\'s up'
+      //   ]);
+      //   expect(Aligner.align(['='], input)).to.equal(output);
+      // });
     });
     describe('aligns', function () {
       it('aligns equals', function () {
@@ -68,4 +68,28 @@ describe('align', function () {
       });
     });
   })
+});
+
+describe('charIndexes', function() {
+  it('return empty if not found', function () {
+    expect(Aligner.charIndexes('asdfasdffoo', ['baz'])).to.eql([])
+  });
+  it('return multi char index', function () {
+    expect(Aligner.charIndexes('asdfasdffoo', ['foo'])).to.eql([{
+      index: 8,
+      search: 'foo'
+    }])
+  });
+  it('return multi char indexs', function () {
+    expect(Aligner.charIndexes('hey there foo and then bar', ['foo','bar'])).to.eql([
+      {
+        index: 10,
+        search: 'foo'
+      },
+      {
+        index: 23,
+        search: 'bar'
+      }
+    ])
+  });
 });
